@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import routerAdmin from './router-admin';
 
 
 // 1- ENTEANCE
@@ -22,7 +23,7 @@ app.set("view engine", "ejs");
 
 // 4 -- ROUTERS
 
-// app.use("/admin",routerAdmin)
+ app.use("/admin",routerAdmin)
 // app.use("/",router);// midddelware disain pattern
 
 export default app;
