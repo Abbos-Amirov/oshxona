@@ -11,7 +11,7 @@ restauranController.goHome = ( req: Request, res: Response) => {
     try{
 
         console.log("Yetib keldi");
-        res.send(" COME HOME")
+        res.send(" came - home");
         
 
     } catch(err) {
@@ -28,7 +28,7 @@ restauranController.getSignup = (req: Request, res: Response) => {
 
         console.log("GetSignup");
         
-      res.send("come - Signup");
+      res.send("came - Signup");
     } catch (err) {
       console.log("Error, getSignup:", err);
   
