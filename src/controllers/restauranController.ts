@@ -1,5 +1,12 @@
-import {  Request, Response } from "express";
+import {  NextFunction, Request, Response } from "express";
 import { T } from "../libs/types/common";
+import Errors,{ HttpCode, Message }from "../libs/types/errors";
+import { AdminRequest, LoginInput, Member, MemberInput } from "../libs/types/member";
+import { MemberType } from "../libs/enums/member.enum";
+import MemberService from "../models/Member.service";
+
+
+const memberService = new MemberService();
 
 const restauranController:T = {}
 
@@ -11,7 +18,7 @@ restauranController.goHome = ( req: Request, res: Response) => {
     try{
 
         console.log("Yetib keldi");
-        res.send(" came - home");
+        res.render("Home");
         
 
     } catch(err) {
@@ -28,49 +35,115 @@ restauranController.getSignup = (req: Request, res: Response) => {
 
         console.log("GetSignup");
         
-      res.send("came - Signup");
+      res.render("Signup");
     } catch (err) {
       console.log("Error, getSignup:", err);
   
     }
   };
 
-  restauranController.processSignup = (req: Request, res: Response) => {
+  restauranController.processSignup = async (req: AdminRequest, res: Response) => {
     try {
 
         console.log("processSignup");
-        
-      res.send("processSignup");
+
+        const file = req.file;
+
+        // if(!file) throw new Errors (HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG);
+
+        const newMember:MemberInput = req.body;
+        newMember.memberImage = file?.path;
+        newMember.memberType = MemberType.RESTAURANT;
+      
+        const result = await memberService.processSignup(newMember)
+
+        req.session.member = result,
+        req.session.save(function() {
+          res.redirect("/admin/product/all");
+        })
+
+
+
     } catch (err) {
-      console.log("Error, processSignup:", err);
-  
+        console.log("Error,processSignup:", err);
+        const message = err instanceof Errors ? err.message: Message.SOMETHING_WENT_WRONG;
+        res.send( `<script> alert("${ message}"); window.location.replace('/admin/signup') </script> `)
+     
     }
   };
 
   // >>>>>> Login  <<<<<<<<<//
-
   restauranController.getLogin = (req: Request, res: Response) => {
     try {
         console.log("getLogin");
-       res.send("Login");
+       res.render("Login");
     } catch (err) {
       console.log("Error, getLogin:", err);
-     
-  
     }
   };
   
 
-  restauranController.processLogin = (req: Request, res: Response) => {
+  restauranController.processLogin = async (req: AdminRequest, res: Response) => {
     try {
         console.log("processLogin");
-       res.send("Login");
+
+        const input: LoginInput = req.body;
+        const result = await memberService.processLogin(input)
+
+        // TUDU session Authuntication
+
+        req.session.member = result,
+         req.session.save(function() {
+           res.redirect("/admin/product/all");
+         })
+
     } catch (err) {
-      console.log("Error, getLogin:", err);
-     
-  
+        console.log("Error, processLogin:", err);
+        const message = err instanceof Errors ? err.message: Message.SOMETHING_WENT_WRONG;
+        res.send
+        ( `<script> alert("${ message}"); window.location.replace('/admin/login') </script> `)
     }
   };
+
+  //>>>>>>>>>>>>> Logout <<<<<<<<<<<<<<//
+  restauranController.logout = async (req: AdminRequest, res: Response) => {
+    try {
+        console.log("logout")
+        req.session.destroy(function() { // req.session.destroy() bu bruzerdagi kookini yo'q qiliyapti
+          res.redirect("/admin")
+        })
+    } catch (err) {
+      console.log("Error, processLogin:", err);
+      res.redirect("/admin")
+    }
+  };
+
+  //>>>>>>>>>>>>> Check Session <<<<<<<<<<<//
+  restauranController.checkAuthSession = async (req:AdminRequest, res: Response) => {
+    try{
+        console.log("checkAuthSession", req.body);
+
+    if(req.session?.member) res.send( `<script> alert("${ req.session.member.memberNick}") </script>b`);
+     else res.send ( `<script> alert("${ Message.NOT_AUTHENTICATED}") </script>`)
+    
+    }catch (err) {
+        console.log("Error, ckeckAuthSession:", err);
+        res.send(err);
+      }
+  }
+
+  // >>>>>>>>>>>>>>>>>> AUZUNTICTION <<<<<<<<<<<<<<<<<//
+  restauranController.verifyRestaurant = (req:AdminRequest, res: Response, next: NextFunction) =>{
+
+    if(req.session?.member?.memberType === MemberType.RESTAURANT) {
+        req.member = req.session.member;
+        next()
+    } else{
+        const message = Message. NOT_AUTHENTICATED;
+      res.send(`<script> alert("${ message }");window.location.replace( '/admin/login' )</script>`);
+
+    }
+  }
 
 
 
