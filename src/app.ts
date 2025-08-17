@@ -58,6 +58,3 @@ app.set("view engine", "ejs");
 
 export default app;
 
-function ConnectMongoDB(session: any) {
-    throw new Error('Function not implemented.');
-}

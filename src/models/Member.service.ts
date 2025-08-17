@@ -16,15 +16,19 @@ class MemberService {
     public async processSignup (input: MemberInput): Promise<Member> {
         const exist = await this.memberModel.findOne({memberType: MemberType.RESTAURANT})
         .exec()
+        console.log("exist", exist);
 
-        if(!exist) throw new Errors (HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
+
+         if(exist) throw new Errors (HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
 
         const salt = await bcrypt.genSalt();
+        console.log("salat",salt);
         input.memberPassword = await bcrypt.hash(input.memberPassword,salt)
+        console.log("salat",salt);
 
         try{
-            const tempResult = new this.memberModel(input)
-            const result = await tempResult.save();
+            const result = await this.memberModel.create(input)
+
             result.memberPassword = "";
             console.log("result ",result );
             
@@ -33,6 +37,8 @@ class MemberService {
             throw new Errors (HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
           }
     }
+
+    
 
     public async processLogin(input: LoginInput): Promise<Member> {
         const member = await this.memberModel.findOne(

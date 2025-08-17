@@ -1,6 +1,8 @@
 import express from "express";
 import restauranController from "./controllers/restauranController";
 import makeUploader from "./libs/utils/uploader";
+import { ProductCollection } from "./libs/enums/product.enum";
+import productController from "./controllers/ productController";
 const routerAdmin = express.Router();
 
 // Oshxona
@@ -29,9 +31,20 @@ restauranController.processSignup)
  // >>>>>>>>>>>>>>>> PRODUCTS  <<<<<<<<<<<<<<<<<<<<<<<//
 routerAdmin.get("/product/all",
 restauranController.verifyRestaurant,
-
-
+productController.getAllProducts
 )
+
+// Cerate Product //
+
+routerAdmin.post("/product/create",
+  restauranController.verifyRestaurant, 
+  makeUploader("products").array("productImages",5),
+  productController.createNewProduct);
+
+  // Update Chosen Product //
+  
+
+
 
 
 export default routerAdmin;
