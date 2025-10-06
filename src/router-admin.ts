@@ -1,8 +1,10 @@
 import express from "express";
-import restauranController from "./controllers/restauranController";
+
 import makeUploader from "./libs/utils/uploader";
 import { ProductCollection } from "./libs/enums/product.enum";
-import productController from "./controllers/ productController";
+
+import restauranController from "./controllers/restauran.controller";
+import productController from "./controllers/product.controller";
 const routerAdmin = express.Router();
 
 // Oshxona
@@ -22,10 +24,12 @@ restauranController.processSignup)
  .post("/login",restauranController.processLogin)
 
  // CheckSession 
- routerAdmin.get("/check-me", restauranController.checkAuthSession)
+ routerAdmin.get("/check-me",
+  restauranController.checkAuthSession)
 
  //Logaut 
- routerAdmin.get("/logout", restauranController.logout)
+ routerAdmin.get("/logout", 
+ restauranController.logout)
 
 
  // >>>>>>>>>>>>>>>> PRODUCTS  <<<<<<<<<<<<<<<<<<<<<<<//
@@ -42,7 +46,22 @@ routerAdmin.post("/product/create",
   productController.createNewProduct);
 
   // Update Chosen Product //
-  
+
+routerAdmin.post("/product/:id", 
+restauranController.verifyRestaurant,
+productController.updateChosenProduct)
+
+// >>>>>>>>>>>>>>>>> USERS <<<<<<<<<<<<<<<<<<< //
+
+routerAdmin.get("/user/all",
+// restauranController.verifyRestaurant,
+restauranController.getUsers)
+
+
+routerAdmin.post("user/edit",
+ restauranController.verifyRestaurant,
+restauranController.updateChosenUser)
+
 
 
 

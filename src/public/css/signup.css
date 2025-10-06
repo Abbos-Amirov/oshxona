@@ -10,8 +10,8 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  animation: gradient 50s ease infinite;
-  -webkit-animation: gradient 50s ease infinite;
+  animation: gradient 100s ease infinite;
+  -webkit-animation: gradient 170s ease infinite;
   background-size: 200% 200%;
   
 }
