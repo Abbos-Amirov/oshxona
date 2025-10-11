@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(-45deg, #110303bf, #e37813, #011c1aba, #968383);
 }
 
 .users-container a {
@@ -23,6 +22,14 @@
   color: #898071;
 }
 
+.total{
+  
+  width: 100%;
+ height: 5rem;
+  padding: 1rem 3rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
 .users-container .navigation-menu {
   position: absolute;
   z-index: 10000;
@@ -30,6 +37,7 @@
   color: #efefee;
   font-size: 40px;
   font-family: monospace;
+  
 }
 
 .users-container .users-frame {
@@ -74,12 +82,49 @@
 }
 
 .users-container .header-name {
-  font-family: "Source Serif Pro";
+  font-family: "Source Serif Pro", serif;
   font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 25px;
-  color: #ffffff;
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  margin-bottom: 30px;
+
+  /* 🔥 Neon effekt asoslari */
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #ffb347,
+    0 0 40px #ffb347,
+    0 0 80px #ffb347;
+
+  animation: glowText 2.5s ease-in-out infinite alternate;
+}
+
+/* ✨ Yaltirash (nur sochish) animatsiyasi */
+@keyframes glowText {
+  0% {
+    text-shadow:
+      0 0 5px #fff,
+      0 0 10px #fff,
+      0 0 20px #ffb347,
+      0 0 40px #ffb347,
+      0 0 80px #ffb347;
+    color: #fff;
+  }
+  100% {
+    text-shadow:
+      0 0 10px #fff,
+      0 0 20px #ffcc33,
+      0 0 40px #ffcc33,
+      0 0 80px #ffcc33,
+      0 0 160px #ffcc33;
+    color: #ffeaa7;
+  }
 }
 
 .users-container select:focus {
@@ -107,4 +152,84 @@
 table th {
   text-align: center;
   vertical-align: middle;
+}
+
+.video-background {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* === Video fon === */
+#bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* videoni butun ekran bo‘ylab yoyadi */
+  z-index: -1; /* orqaga qo‘yadi */
+}
+
+/* === M
+
+/* === VIDEO FON USTIDAGI NAVBAR === */
+.total {
+  position: absolute;
+  width: 100%;
+  z-index: 50; /* videodan yuqorida turadi */
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+  background: rgba(0, 0, 0, 0.2); /* yarim shaffof qora fon */
+  backdrop-filter: blur(8px); /* oynadek effekt */
+}
+
+/* Ichki menyu konteyneri */
+.navigation-menu {
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-family: "Playfair Display", serif;
+  margin-right: -90rem;
+}
+
+/* Brend nomi */
+.navigation-menu .brand {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #f8f4f1;
+  letter-spacing: 2px;
+}
+
+/* Menyu ro‘yxati */
+.navigation-menu .nav {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* Har bir link */
+.navigation-menu .nav-link {
+  text-decoration: none;
+  font-size: 1.1rem;
+  color: #f8f4f1;
+  padding: 8px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+/* Hover effekti */
+.navigation-menu .nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-color: #fff;
+  cursor: pointer;
 }

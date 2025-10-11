@@ -5,19 +5,23 @@
 <body>
   <div class="users-container">
     <% if(!member) { %>
-    <div class="navigation-menu">
-      <ul class="nav justify-content-center">
-        <li class="nav-item" style="cursor: pointer">
-          <a class="nav-link active" href="/admin/">Home</a>
-        </li>
-        <li class="nav-item" style="cursor: pointer">
-          <a class="nav-link" href="/admin/signup">SignUp</a>
-        </li>
-        <li class="nav-item" style="cursor: pointer">
-          <a class="nav-link" href="/admin/login">Login</a>
-        </li>
-      </ul>
-    </div>
+      <div class="total">
+        <div class="navigation-menu">
+          <div class="brand">Zomin</div>
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="/admin/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/signup">SignUp</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/login">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
 
     <div class="users-frame" style="color: #dddddd">
       <div class="board" style="font-size: 40px">Please login first!</div>
@@ -84,6 +88,14 @@
     </div>
     <% } %>
   </div>
+
+  <video autoplay muted loop playsinline id="bg-video">
+    <source src="/video/bakal.mp4" type="video/mp4" />
+  </video>
+
+  <script type="text/javascript" src="/js/products.js"></script>
+
+  
 
   <script type="text/javascript" src="/js/users.js"></script>
 </body>

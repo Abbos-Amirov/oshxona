@@ -1,43 +1,55 @@
 <%- include('includes/header') %>
 
-<link rel="stylesheet" type="text/css" href="/css/home.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.js"></script>
+<link rel="stylesheet" href="/css/home.css" />
+<link rel="stylesheet" href="/css/homeAnimation.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
 <body>
-<div class="home-container">
+  <!-- === Navbar === -->
+  <div class="navigation-menu">
+    <div class="zomin">Zomin</div>
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link active" href="/admin">Home</a>
+      </li>
 
-    <div class="navigation-menu">
-        <ul class="nav justify-content-center">
-            <li class="nav-item" style="cursor: pointer;">
-                <a class="nav-link active" href="/admin" >Home</a>
-            </li>
+      <% if (!member) { %>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/signup">Signup</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/login">Login</a>
+      </li>
+      <% } else { %>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/product/all">Menu</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/user/all">Users</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/logout" onClick="return confirm('Do you want to logout?');">Logout</a>
+      </li>
+      <% } %>
+    </ul>
+  </div>
 
-            <% if (!member) { %>
-                <li class="nav-item" style="cursor: pointer;">
-                    <a class="nav-link" href="/admin/signup" >Signup</a>
-                </li>
-                <li class="nav-item" style="cursor: pointer;">
-                    <a class="nav-link" href="/admin/login">Login</a>
-                </li>
-            <% } else { %>
-                <li class="nav-item" style="cursor: pointer;">
-                    <a class="nav-link" href="/admin/product/all">Menu</a>
-                </li>
-                <li class="nav-item" style="cursor: pointer;">
-                    <a class="nav-link" href="/admin/user/all">Users</a>
-                </li>
-                <li class="nav-item" style="cursor: pointer;">
-                    <a class="nav-link" href="/admin/logout" onClick="return confirm('Do you want to logout?');">Logout</a>
-                </li>
-            <% } %>
-
-        </ul>
-    </div>
-
+  <!-- === Home Section === -->
+  <div class="home-container">
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="/video/balgar.mp4" type="video/mp4" />
+      </video>
     
-</div>
+    <div class="welcome-text">
+        <h1 id="welcomeTitle">Assalom Aleykum</h1>
+      <h1 id="welcomeTitle">Welcome to Zomin</h1>
+    </div>
+  </div>
 
-<script type="text/javascript" src="/js/home.js"></script>
+  
 
+  
+  <script type="text/javascript" src="/js/home.js"></script>
 </body>
+
 <%- include('includes/footer') %>
