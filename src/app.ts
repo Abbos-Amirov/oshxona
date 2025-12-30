@@ -9,6 +9,9 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import ConnectMongoDB from 'connect-mongodb-session';
 import { T } from './libs/types/common';
+import {Server as SocketIOServer} from "socket.io";
+import http from "http"
+
 
 const MongodbStore = ConnectMongoDB(session);
 const store = new MongodbStore({
@@ -52,7 +55,7 @@ app.use(function (req,res,next){
 
 // 3 -- VIEWS
 
-app.set("views",path.join(__dirname, "views"));///Users/amirovabbos2022/Desktop/Screenshot 2025-07-15 at 21.58.25.png
+app.set("views",path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 
@@ -61,4 +64,27 @@ app.set("view engine", "ejs");
 app.use("/admin",routerAdmin)
 app.use("/",router);// midddelware disain pattern
 
-export default app;
+const server = http.createServer(app);
+const io = new SocketIOServer(server,{ 
+    cors:{
+        origin: true,
+        credentials: true
+
+    }
+})
+
+let summaryClient = 0;
+io.on("connection", (socket) => {
+    summaryClient++;
+    console.log( `Connetion & total  [${summaryClient}]`);
+
+    socket.on("disconnect" ,() => {
+        summaryClient--;
+
+        console.log( `Disconnetion & total  [${summaryClient}]`)
+    })
+    
+})
+
+
+export default server;
