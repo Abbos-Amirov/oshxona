@@ -1,9 +1,15 @@
 #!/bin/bash
 
 # PRODUCTION
+<<<<<<< HEAD
 git reset --hard
 git checkout master
 git pull origin master
+=======
+# git reset --hard
+# git checkout master
+# git pull origin master
+>>>>>>> develop
 
 npm i
 npm run build
